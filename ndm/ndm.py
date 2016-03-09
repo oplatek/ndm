@@ -12,6 +12,7 @@ sys.path.extend(['..'])
 import tensorflow as tf
 
 import dataset
+import model_cnn12_bn_att_l1_w2t as cnn12_bn_att_l1_w2t
 import model_cnn_w2w as cnn_w2w
 import model_rnn_w2w as rnn_w2w
 import model_cnn12_w2t as cnn12_w2t
@@ -325,14 +326,14 @@ def main(run):
                 model = cnn12_att_a_w2t.Model(data, FLAGS)
             elif FLAGS.model == 'cnn12-bn-att-a-w2targs':
                 model = cnn12_bn_att_a_w2targs.Model(data, FLAGS)
+            elif FLAGS.model == 'cnn12-bn-att-l1-w2t':
+                model = cnn12_bn_att_l1_w2t.Model(data, FLAGS)
             elif FLAGS.model == 'cnn12-bn-att-a-w2t':
                 model = cnn12_bn_att_a_w2t.Model(data, FLAGS)
             elif FLAGS.model == 'cnn12-bn-att-a-bn-w2t':
                 model = cnn12_bn_att_a_bn_w2t.Model(data, FLAGS)
             elif FLAGS.model == 'cnn12-mp-bn-att-a-w2t':
                 model = cnn12_mp_bn_att_a_w2t.Model(data, FLAGS)
-            elif FLAGS.model == 'cnn12-att-b-w2t':
-                model = cnn12_att_b_w2t.Model(data, FLAGS)
             elif FLAGS.model == 'cnn23-mp-bn-w2t':
                 model = cnn23_mp_bn_w2t.Model(data, FLAGS)
             elif FLAGS.model == 'rnn1-w2t':

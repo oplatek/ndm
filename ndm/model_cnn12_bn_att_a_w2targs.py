@@ -146,25 +146,28 @@ class Model(ModelW2TArgs):
                 # print(db_result)
 
             with tf.name_scope("Decoder"):
-                second_to_last_user_utterance = encoded_utterances[:, history_length - 3, 0, :]
-                last_system_utterance = encoded_utterances[:, history_length - 2, 0, :]
+                # FIXME OP disable for synthetic data
+                # second_to_last_user_utterance = encoded_utterances[:, history_length - 3, 0, :]
+                # last_system_utterance = encoded_utterances[:, history_length - 2, 0, :]
                 last_user_utterance = encoded_utterances[:, history_length - 1, 0, :]
 
+                # FIXME OP for synthetic data
+                # last_system_utterance,
+                # second_to_last_user_utterance,
                 dialogue_state = tf.concat(
                     1,
                     [
                         encoded_history,
                         last_user_utterance,
-                        last_system_utterance,
-                        second_to_last_user_utterance,
                         attention_feat,
                         db_result
                     ],
                     name='dialogue_state'
                 )
+                # FIXME OP for synthetic data 3 * histories_embedding_size * conv_mul -> 1 * histories_embedding_size * conv_mul
                 dialogue_state_size = (
                     conv3.size +
-                    3 * histories_embedding_size * conv_mul +
+                    1 * histories_embedding_size * conv_mul +
                     attention_feat_size +
                     db_result_size +
                     0

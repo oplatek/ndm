@@ -424,6 +424,7 @@ class DSTC2:
 
     def train_data_processing(self, input, train_data_fn, data_fraction):
         train_data = load_json_data(train_data_fn)
+        print('ONDRA DEBUG how much data used', input, train_data_fn,)
         train_data = train_data[:int(len(train_data) * min(data_fraction, 1.0))]
 
         train_examples = gen_examples(train_data, input)
@@ -518,6 +519,7 @@ class DSTC2:
 
         data = load_json_data(data_fn)
         data = data[:int(len(data) * min(data_fraction, 1.0))]
+        print('ONDRA DEBUG how much data used', input, len(data))
         examples = gen_examples(data, input)
         norm_examples = normalize(examples)
         norm_examples = sort_by_conversation_length(norm_examples)

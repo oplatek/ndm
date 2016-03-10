@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+Generate synthetic datasets for demonstration purposes
+"""
 import random
 import json
-
-template_name = r'data.synthetic01.%s.json'
-sets_splits = [('train', 500), ('dev', 100), ('test', 100)]
-db_name = 'data.synthetic01.db.json'
-dim_price=100
-dim_food=100
-other_ambiguous_factor=1  # use it in id
+import argparse
 
 
 def gen_db(dim_price=2, dim_food=2, other_ambiguous_factor=1):
@@ -44,10 +41,21 @@ def generate_synthetic01(num_dialog, dim_price=2, dim_food=2):
 
 
 if __name__ == "__main__":
-    db_data1 = gen_db(dim_price, dim_food, other_ambiguous_factor)
+    parser = argparse.ArgumentParser(__doc__)
+    parser.add_argument('--train-size', type=int, default=500)
+    parser.add_argument('--dev-size', type=int, default=100)
+    parser.add_argument('--test-size', type=int, default=100)
+    parser.add_argument('--price-dim', type=int, default=2)
+    parser.add_argument('--food-dim', type=int, default=2)
+    args = parser.parse_args()
+
+    other_ambiguous_factor=1  # use it in id
+    template_name = r'data.synthetic01.%s.json'
+    db_name = 'data.synthetic01.db.json'
+    db_data1 = gen_db(args.price_dim, args.food_dim, other_ambiguous_factor)
     with open(db_name, 'w') as w:
         json.dump(db_data1, w, sort_keys=True, indent=4, separators=(',', ': '))
-    for s, c in sets_splits:
+    for s, c in [('train', args.train_size), ('dev', args.dev_size), ('test', args.test_size)]:
         set_name = template_name % s
         with open(set_name, 'w') as w:
-            json.dump(generate_synthetic01(c), w, sort_keys=True, indent=4, separators=(',', ': '))
+            json.dump(generate_synthetic01(c, dim_price=args.price_dim, dim_food=args.food_dim), w, sort_keys=True, indent=4, separators=(',', ': '))

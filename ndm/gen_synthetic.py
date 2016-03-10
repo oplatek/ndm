@@ -35,12 +35,11 @@ def generate_synthetic01(num_dialog, dim_price=2, dim_food=2):
     for i in range(num_dialog):
         pr = 'pricerange%d' % random.randint(0, dim_price - 1)
         fd = 'food%d' % random.randint(0, dim_food - 1)
-        q = 'I am looking for a %s %s restaurant' % (pr, fd)
-        # a = '%s serves %{matched_slots} food'  should be better
-        a = '%s%s matches the criteria.' % (pr, fd)
+        q = "i'm looking for a %s %s restaurant" % (pr, fd)
+        a = '%s%s serves %s food in the %s price range.' % (pr, fd, fd, pr)
         dialogs.append([
-            ['hello', 'hi', 'hi', -555.5555, 'none none none'],
-            [a, q, q, -666.666, '%s %s none' % (fd, pr)]])
+            ['hello', q, q, -555.5555, 'none none none'],
+            [a, 'thank you goodbye', 'thank you goodbye', -666.666, '%s %s none' % (fd, pr)]])
     return dialogs
 
 
